@@ -1,3 +1,31 @@
+#services:
+#  prime-service:
+#    image: prime-service
+#    build:
+#      context: ../prime-service
+#      dockerfile: Dockerfile
+#    container_name: prime-service
+#    ports:
+#      - "4001:8080"
+#    environment:
+#      - server.port=8080
+#      - spring.datasource.url=jdbc:postgresql://prime-database:5432/primes
+#      - spring.datasource.username=postgres
+#      - spring.datasource.password=password
+#    restart: "no"
+#    depends_on:
+#      - prime-service-database-postgres
+#
+#
+#  prime-service-database-postgres:
+#    image: postgres:alpine
+#    container_name: prime-database
+#    ports:
+#      - "5001:5432"
+#    environment:
+#      POSTGRES_PASSWORD: password
+#      POSTGRES_DB: prime
+
 services:
   prime-service:
     image: prime-service
@@ -16,26 +44,25 @@ services:
     depends_on:
       - prime-service-database-postgres
 
-
   prime-service-database-postgres:
     image: postgres:alpine
     container_name: prime-database
     ports:
       - "5001:5432"
     environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: prime
+      POSTGRES_PASSWORD : password
+      POSTGRES_DB : primes
 
-  gateway-service:
-    image: gateway-service
-    build:
-      context: ../gateway-service
-      dockerfile: Dockerfile
-    container_name: gateway-service
-    ports:
-      - "4000:8180"
-    depends_on:
-      - primes-service
-
-    environment:
-      - server.port=8180
+#  gateway-service:
+#    image: gateway-service
+#    build:
+#      context: ../gateway-service
+#      dockerfile: Dockerfile
+#    container_name: gateway-service
+#    ports:
+#      - "4000:8180"
+#    depends_on:
+#      - prime-service
+#
+#    environment:
+#      - server.port=8180
